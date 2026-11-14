@@ -1,13 +1,13 @@
 import { io } from 'socket.io-client';
 
-// Use same host or fallback to port 5000 in dev mode
-const SOCKET_URL = window.location.hostname === 'localhost' && window.location.port === '3000'
-  ? 'http://localhost:5000'
-  : '/';
+// In Vercel Services or local proxy mode, connect to same-origin '/'
+// Or optionally use VITE_SOCKET_URL if provided
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || '/';
 
 export const socket = io(SOCKET_URL, {
   autoConnect: true,
   reconnection: true,
   reconnectionAttempts: 10,
-  reconnectionDelay: 1000
+  reconnectionDelay: 1000,
+  transports: ['websocket', 'polling']
 });

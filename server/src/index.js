@@ -65,10 +65,15 @@ app.get('/api/info', (req, res) => {
   });
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`=======================================================`);
-  console.log(`🎮 Trading Game Simulator Server`);
-  console.log(`   ➜ Local:   http://localhost:${PORT}`);
-  console.log(`   ➜ Health:  http://localhost:${PORT}/api/health`);
-  console.log(`=======================================================`);
-});
+// Start server when run directly (not in Vercel serverless environment)
+if (process.env.VERCEL !== '1') {
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`=======================================================`);
+    console.log(`🎮 Trading Game Simulator Server`);
+    console.log(`   ➜ Local:   http://localhost:${PORT}`);
+    console.log(`   ➜ Health:  http://localhost:${PORT}/api/health`);
+    console.log(`=======================================================`);
+  });
+}
+
+export default server;
